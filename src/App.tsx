@@ -13,6 +13,7 @@ function App() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
   
   const heroRef = useRef<HTMLDivElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
@@ -115,6 +116,8 @@ function App() {
       setTimeout(() => setSubmitSuccess(false), 5000);
     } catch (error) {
       console.error('Email failed to send:', error);
+      setSubmitError(true);
+      setTimeout(() => setSubmitError(false), 5000);
     }
 
     setIsSubmitting(false);
@@ -255,6 +258,17 @@ function App() {
                     <span className="text-white text-sm">✓</span>
                   </div>
                   <p className="font-medium">Thank you for your message! We'll get back to you soon.</p>
+                </div>
+              </div>
+            )}
+
+            {submitError && (
+              <div className="mt-6 p-6 bg-red-50 border border-green-200 text-red-800 rounded-xl shadow-lg animate-pulse">
+                <div className="flex items-center space-x-3">
+                  <div className="w-6 h-6 bg-red-500 rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm">✓</span>
+                  </div>
+                  <p className="font-medium">Your message was not sent. Please try again.</p>
                 </div>
               </div>
             )}
